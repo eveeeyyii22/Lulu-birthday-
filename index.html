@@ -1,1 +1,196 @@
 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, Lulu! 🎀</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap');
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 24px 16px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(145deg, #fff5f8, #ffdce9, #f4e5ff);
+  color: #783b58;
+  font-family: Arial, sans-serif;
+}
+
+.birthday {
+  position: relative;
+  width: 100%;
+  max-width: 430px;
+  padding: 36px 23px 26px;
+  text-align: center;
+  background: #ffffffdf;
+  border: 2px solid white;
+  border-radius: 30px;
+  box-shadow: 0 20px 60px #d77da52b;
+  overflow: hidden;
+}
+
+.main-bow {
+  font-size: 66px;
+  animation: float 2.5s ease-in-out infinite;
+}
+
+.corner-bow {
+  position: absolute;
+  top: 14px;
+  font-size: 25px;
+  opacity: .75;
+}
+
+.bow-left { left: 14px; transform: rotate(-20deg); }
+.bow-right { right: 14px; transform: rotate(20deg); }
+
+.eyebrow {
+  margin-top: 15px;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: #bd7394;
+  direction: ltr;
+}
+
+h1 {
+  margin: 18px 0;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(29px, 8vw, 38px);
+  color: #d85f91;
+  line-height: 1.25;
+  direction: ltr;
+}
+
+.divider {
+  color: #d990b1;
+  font-size: 14px;
+  margin: 18px 0;
+}
+
+.intro {
+  font-size: 15px;
+  line-height: 2;
+}
+
+button {
+  margin-top: 16px;
+  border: 0;
+  border-radius: 30px;
+  padding: 14px 24px;
+  background: #e982aa;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px #e982aa45;
+}
+
+button:hover { background: #d85f91; }
+
+#surprise {
+  margin-top: 25px;
+  color: #a64d76;
+  font-size: 15px;
+  line-height: 2.1;
+  overflow-wrap: anywhere;
+}
+
+.bottom-bow { margin-top: 22px; color: #d85f91; font-size: 28px; }
+.hearts { margin-top: 12px; color: #e982aa; font-size: 23px; letter-spacing: 7px; }
+.footer { margin: 20px 0 0; color: #bd7394; font-size: 10px; letter-spacing: 2px; direction: ltr; }
+
+#heartsContainer {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.floating-heart {
+  position: absolute;
+  bottom: -35px;
+  color: #e982aa;
+  font-size: 24px;
+  animation: flyUp 3s ease-out forwards;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50% { transform: translateY(-10px) rotate(4deg); }
+}
+
+@keyframes flyUp {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-100vh) rotate(35deg); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+<main class="birthday">
+  <div class="corner-bow bow-left">🎀</div>
+  <div class="corner-bow bow-right">🎀</div>
+
+  <div class="main-bow">🎀</div>
+  <p class="eyebrow">A LITTLE GIFT FOR YOU</p>
+  <h1>Happy Birthday, Lulu!</h1>
+
+  <div class="divider">୨୧ ───── ♡ ───── ୨୧</div>
+
+  <p class="intro">يا أحلى لولو بالدنيا، عندي لك مفاجأة صغيرة</p>
+
+  <button id="giftButton">افتحي هديتك</button>
+  <p id="surprise" hidden></p>
+
+  <div class="bottom-bow">୨୧</div>
+  <div class="hearts">♡ ♥ ♡ ♥ ♡</div>
+  <p class="footer">just for you, from rick</p>
+</main>
+
+<div id="heartsContainer"></div>
+
+<script>
+const giftButton = document.getElementById("giftButton");
+const surprise = document.getElementById("surprise");
+const heartsContainer = document.getElementById("heartsContainer");
+
+const message = "كل عام وانتي بخير يا لولو، يا أجمل شخص وأحن قلب، أتمنى لك عمر مليان أشياء عسل وحلوه تشبه قلبك، وأتمنى أكون معك بكل أعياد ميلادك الجايه، يا أحلى من عرفته.";
+
+let opened = false;
+
+giftButton.addEventListener("click", function () {
+  if (opened) return;
+  opened = true;
+  surprise.hidden = false;
+  giftButton.textContent = "♡ ♥ ♡";
+
+  let i = 0;
+  function typeMessage() {
+    if (i < message.length) {
+      surprise.textContent += message[i];
+      i++;
+      setTimeout(typeMessage, 45);
+    }
+  }
+  typeMessage();
+
+  for (let j = 0; j < 24; j++) {
+    const heart = document.createElement("span");
+    heart.className = "floating-heart";
+    heart.textContent = Math.random() > 0.5 ? "♡" : "♥";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDelay = Math.random() * 1.5 + "s";
+    heart.style.fontSize = 16 + Math.random() * 20 + "px";
+    heartsContainer.appendChild(heart);
+    heart.addEventListener("animationend", () => heart.remove());
+  }
+});
+</script>
+</body>
+</html>
+
